@@ -1,0 +1,28 @@
+{
+    "os": "Linux-5.4.0-1045-aws-x86_64-with-Ubuntu-18.04-bionic",
+    "python": "3.6.9",
+    "heartbeatAt": "2021-07-09T12:00:41.203696",
+    "startedAt": "2021-07-09T12:00:40.356248",
+    "docker": null,
+    "gpu": "Tesla T4",
+    "gpu_count": 1,
+    "cpu_count": 8,
+    "cuda": null,
+    "args": [
+        "-a",
+        "resnet18",
+        "/home/ubuntu/hw09"
+    ],
+    "state": "running",
+    "program": "main.py",
+    "codePath": "main.py",
+    "git": {
+        "remote": "https://github.com/sam79337152/w251hw9.git",
+        "commit": "e65b8b2e0b62924f7514dcb83e70e3423364e5c3"
+    },
+    "email": null,
+    "root": "/home/ubuntu/hw09/examples/imagenet/w251hw9",
+    "host": "ip-172-31-30-6",
+    "username": "ubuntu",
+    "executable": "/usr/bin/python3"
+}

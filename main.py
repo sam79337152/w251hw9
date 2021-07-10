@@ -18,6 +18,11 @@ import torchvision.transforms as transforms
 import torchvision.datasets as datasets
 import torchvision.models as models
 
+import wandb
+wandb.init(project="Single GPU")
+wandb.config.batch_size = 128
+
+
 model_names = sorted(name for name in models.__dict__
     if name.islower() and not name.startswith("__")
     and callable(models.__dict__[name]))
@@ -149,7 +154,7 @@ def main_worker(gpu, ngpus_per_node, args):
             # DistributedDataParallel, we need to divide the batch size
             # ourselves based on the total number of GPUs we have
             # args.batch_size = int(args.batch_size / ngpus_per_node)
-            args.batch_size = int(args.batch_size / ngpus_per_node/2)
+            args.batch_size = 128
             args.workers = int((args.workers + ngpus_per_node - 1) / ngpus_per_node)
             model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.gpu])
         else:
@@ -222,7 +227,6 @@ def main_worker(gpu, ngpus_per_node, args):
     train_loader = torch.utils.data.DataLoader(
         train_dataset, batch_size=128, shuffle=(train_sampler is None),
         num_workers=args.workers, pin_memory=True, sampler=train_sampler)
-    print("Train batch size: ",args.batch_size)
     val_loader = torch.utils.data.DataLoader(
         datasets.ImageFolder(valdir, transforms.Compose([
             transforms.Resize(256),
@@ -232,12 +236,12 @@ def main_worker(gpu, ngpus_per_node, args):
         ])),
         batch_size=128, shuffle=False,
         num_workers=args.workers, pin_memory=True)
-    print("Val batch size: ",len(val_loader))
     if args.evaluate:
         validate(val_loader, model, criterion, args)
         return
 
-    for epoch in range(args.start_epoch, args.epochs):
+    # for epoch in range(args.start_epoch, args.epochs):
+    for epoch in range(args.start_epoch, 1):
         if args.distributed:
             train_sampler.set_epoch(epoch)
         adjust_learning_rate(optimizer, epoch, args)
@@ -274,6 +278,8 @@ def train(train_loader, model, criterion, optimizer, epoch, args):
         [batch_time, data_time, losses, top1, top5],
         prefix="Epoch: [{}]".format(epoch))
 
+    #San add in for wandb
+    wandb.watch(model, log_freq=100)
     # switch to train mode
     model.train()
 
@@ -351,7 +357,10 @@ def validate(val_loader, model, criterion, args):
         # TODO: this should also be done with the ProgressMeter
         print(' * Acc@1 {top1.avg:.3f} Acc@5 {top5.avg:.3f}'
               .format(top1=top1, top5=top5))
-
+        # Sam add in for 
+        wandb.log({
+        "Top1 Accuracy": top1,
+        "Top5 Accuracy": top5})
     return top1.avg
 
 
@@ -424,7 +433,6 @@ def accuracy(output, target, topk=(1,)):
             correct_k = correct[:k].reshape(-1).float().sum(0, keepdim=True)
             res.append(correct_k.mul_(100.0 / batch_size))
         return res
-
 
 if __name__ == '__main__':
     main()

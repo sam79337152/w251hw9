@@ -1,0 +1,52 @@
+2021-07-09 12:00:40,357 INFO    MainThread:28286 [wandb_setup.py:_flush():69] setting env: {}
+2021-07-09 12:00:40,357 INFO    MainThread:28286 [wandb_setup.py:_flush():69] setting login settings: {}
+2021-07-09 12:00:40,357 INFO    MainThread:28286 [wandb_init.py:_log_setup():337] Logging user logs to /home/ubuntu/hw09/examples/imagenet/w251hw9/wandb/run-20210709_120040-9u31d07x/logs/debug.log
+2021-07-09 12:00:40,357 INFO    MainThread:28286 [wandb_init.py:_log_setup():338] Logging internal logs to /home/ubuntu/hw09/examples/imagenet/w251hw9/wandb/run-20210709_120040-9u31d07x/logs/debug-internal.log
+2021-07-09 12:00:40,357 INFO    MainThread:28286 [wandb_init.py:init():370] calling init triggers
+2021-07-09 12:00:40,357 INFO    MainThread:28286 [wandb_init.py:init():377] wandb.init called with sweep_config: {}
+config: {}
+2021-07-09 12:00:40,357 INFO    MainThread:28286 [wandb_init.py:init():419] starting backend
+2021-07-09 12:00:40,357 INFO    MainThread:28286 [backend.py:_multiprocessing_setup():72] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2021-07-09 12:00:40,364 INFO    MainThread:28286 [backend.py:ensure_launched():135] starting backend process...
+2021-07-09 12:00:40,368 INFO    MainThread:28286 [backend.py:ensure_launched():140] started backend process with pid: 28303
+2021-07-09 12:00:40,369 INFO    MainThread:28286 [wandb_init.py:init():424] backend started and connected
+2021-07-09 12:00:40,370 INFO    MainThread:28286 [wandb_init.py:init():472] updated telemetry
+2021-07-09 12:00:40,370 INFO    MainThread:28286 [wandb_init.py:init():491] communicating current version
+2021-07-09 12:00:40,941 INFO    MainThread:28286 [wandb_init.py:init():496] got version response 
+2021-07-09 12:00:40,941 INFO    MainThread:28286 [wandb_init.py:init():504] communicating run to backend with 30 second timeout
+2021-07-09 12:00:41,193 INFO    MainThread:28286 [wandb_init.py:init():529] starting run threads in backend
+2021-07-09 12:00:41,257 INFO    MainThread:28286 [wandb_run.py:_console_start():1623] atexit reg
+2021-07-09 12:00:41,257 INFO    MainThread:28286 [wandb_run.py:_redirect():1497] redirect: SettingsConsole.REDIRECT
+2021-07-09 12:00:41,258 INFO    MainThread:28286 [wandb_run.py:_redirect():1502] Redirecting console.
+2021-07-09 12:00:41,260 INFO    MainThread:28286 [wandb_run.py:_redirect():1558] Redirects installed.
+2021-07-09 12:00:41,260 INFO    MainThread:28286 [wandb_init.py:init():554] run started, returning control to user process
+2021-07-09 12:00:41,261 INFO    MainThread:28286 [wandb_config.py:__setitem__():141] config set batch_size = 128 - <bound method Run._config_callback of <wandb.sdk.wandb_run.Run object at 0x7fa39abb1e48>>
+2021-07-09 12:00:41,261 INFO    MainThread:28286 [wandb_run.py:_config_callback():872] config_cb batch_size 128 None
+2021-07-09 12:00:49,179 INFO    MainThread:28286 [wandb_watch.py:watch():40] Watching
+2021-07-09 12:58:30,552 INFO    MainThread:28286 [wandb_run.py:_atexit_cleanup():1593] got exitcode: 1
+2021-07-09 12:58:30,557 INFO    MainThread:28286 [wandb_run.py:_restore():1565] restore
+2021-07-09 12:58:36,626 ERROR   MainThread:28286 [wandb_run.py:_atexit_cleanup():1611] Problem finishing run
+Traceback (most recent call last):
+  File "/home/ubuntu/.local/lib/python3.6/site-packages/wandb/sdk/wandb_run.py", line 1601, in _atexit_cleanup
+    self._on_finish()
+  File "/home/ubuntu/.local/lib/python3.6/site-packages/wandb/sdk/wandb_run.py", line 1737, in _on_finish
+    self.history._flush()
+  File "/home/ubuntu/.local/lib/python3.6/site-packages/wandb/sdk/wandb_history.py", line 59, in _flush
+    self._callback(row=self._data, step=self._step)
+  File "/home/ubuntu/.local/lib/python3.6/site-packages/wandb/sdk/wandb_run.py", line 932, in _history_callback
+    row, step, publish_step=not_using_tensorboard
+  File "/home/ubuntu/.local/lib/python3.6/site-packages/wandb/sdk/interface/interface.py", line 231, in publish_history
+    item.value_json = json_dumps_safer_history(v)  # type: ignore
+  File "/home/ubuntu/.local/lib/python3.6/site-packages/wandb/util.py", line 667, in json_dumps_safer_history
+    return json.dumps(obj, cls=WandBHistoryJSONEncoder, **kwargs)
+  File "/usr/lib/python3.6/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+  File "/usr/lib/python3.6/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/lib/python3.6/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/home/ubuntu/.local/lib/python3.6/site-packages/wandb/util.py", line 634, in default
+    return json.JSONEncoder.default(self, obj)
+  File "/usr/lib/python3.6/json/encoder.py", line 180, in default
+    o.__class__.__name__)
+TypeError: Object of type 'AverageMeter' is not JSON serializable
